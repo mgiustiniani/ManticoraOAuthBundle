@@ -1,0 +1,21 @@
+{
+    "name": "manticora/oauth-bundle",
+    "description": "Componente di sicurezza per i servizi Rest",
+    "require": {
+        "friendsofsymfony/oauth-server-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": "1.2.*"
+    },
+    "authors": [
+        {
+            "name": "Mario Giustiniani",
+            "email": "mariogiustiniani@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": { "Manticora\\OAuthBundle": "" }
+    },
+    "target-dir": "Manticora/OAuthBundle"
+}
