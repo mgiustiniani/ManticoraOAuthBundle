@@ -8,6 +8,7 @@
 namespace Manticora\OAuthBundle\Command;
 
 
+use Manticora\OAuthBundle\Model\ClientRoleableInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,6 +25,7 @@ class CreateClientCommand extends ContainerAwareCommand
             ->addArgument('name', InputArgument::REQUIRED, 'Sets the client name', null)
             ->addOption('redirect-uri', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Sets redirect uri for client. Use this option multiple times to set multiple redirect URIs.', null)
             ->addOption('grant-type', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Sets allowed grant type for client. Use this option multiple times to set multiple grant types..', null)
+            ->addOption('role', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Sets role for client. Use this option multiple times to set multiple roles..', null)
             ->setHelp(<<<EOT
 The <info>%command.name%</info>command creates a new client.
 
@@ -44,6 +46,10 @@ EOT
         $client->setName($input->getArgument('name'));
         $client->setRedirectUris($input->getOption('redirect-uri'));
         $client->setAllowedGrantTypes($input->getOption('grant-type'));
+        if($client instanceof ClientRoleableInterface) {
+            $client->setRoles($input->getOption('role'));
+        }
+
         $clientManager->updateClient($client);
         $output->writeln(sprintf('Added a new client with name <info>%s</info> and public id <info>%s</info>.', $client->getName(), $client->getPublicId()));
     }

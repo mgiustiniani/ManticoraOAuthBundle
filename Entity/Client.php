@@ -9,11 +9,12 @@ namespace Manticora\OAuthBundle\Entity;
 
 use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 use Doctrine\ORM\Mapping as ORM;
+use Manticora\OAuthBundle\Model\ClientRoleableInterface;
 
 /**
  * @ORM\Entity
  */
-class Client extends BaseClient
+class Client extends BaseClient implements ClientRoleableInterface
 {
     /**
      * @ORM\Id
@@ -26,6 +27,11 @@ class Client extends BaseClient
      *  @ORM\Column(type="string")
      */
     protected $name;
+
+    /**
+     *  @ORM\Column(type="array")
+     */
+    protected $roles =  array();
 
     public function __construct()
     {
@@ -64,5 +70,15 @@ class Client extends BaseClient
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function getRoles()
+    {
+        $this->roles;
     }
 }
