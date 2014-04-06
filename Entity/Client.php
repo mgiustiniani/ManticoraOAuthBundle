@@ -75,10 +75,12 @@ class Client extends BaseClient implements ClientRoleableInterface
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
+        return $this;
     }
 
     public function getRoles()
     {
-        $this->roles;
+        return $this->roles;
     }
 }

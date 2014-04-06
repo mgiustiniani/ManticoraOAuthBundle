@@ -14,6 +14,7 @@ namespace Manticora\OAuthBundle\Security\Authentication\Provider;
 use FOS\OAuthServerBundle\Model\Token;
 use FOS\OAuthServerBundle\Security\Authentication\Token\OAuthToken;
 use FOS\OAuthServerBundle\Security\Authentication\Provider\OAuthProvider as BaseOAuthProvider;
+use Manticora\OAuthBundle\Entity\Client;
 use Manticora\OAuthBundle\Model\ClientRoleableInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -43,23 +44,21 @@ class OAuthProvider extends BaseOAuthProvider
 
         try {
             $tokenString = $token->getToken();
-            echo 'eededed';
             if ($accessToken = $this->serverService->verifyAccessToken($tokenString)) {
                 $scope = $accessToken->getScope();
                 $user  = $accessToken->getUser();
 
 
                 $roles = (null !== $user) ? $user->getRoles() : array();
-                var_dump(get_class($accessToken->getClient() ));
                 if($accessToken instanceof Token
                     &&  $accessToken->getClient() instanceof ClientRoleableInterface
                       ) {
-                    echo 'eeaaaaadeded';
+
                     $client =$accessToken->getClient();
-                    var_dump(get_class($client));
-                    var_dump($client->getRoles());
-                    if($client->getRoles());
-                   array_merge($roles,  $client->getRoles() );
+
+
+                   $roles = array_merge($roles,  $client->getRoles() );
+
                 }
 
                 if (!empty($scope)) {
